@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 /// Small type LinkPreviewGenerator widget
 class LinkViewSmall extends StatelessWidget {
   final Color? bgColor;
-  final int? bodyMaxLines;
-  final TextOverflow? bodyTextOverflow;
-  final TextStyle? bodyTextStyle;
+  final int? descriptionMaxLines;
+  final TextOverflow? descriptionTextOverflow;
+  final TextStyle? descriptionTextStyle;
   final String description;
   final String domain;
   final TextStyle? domainTextStyle;
   final String imageUri;
   final bool isIcon;
   final double? radius;
-  final bool showBody;
+  final bool showDescription;
   final bool showDomain;
   final bool showGraphic;
   final bool showTitle;
@@ -29,15 +29,15 @@ class LinkViewSmall extends StatelessWidget {
     required this.description,
     required this.imageUri,
     required this.graphicFit,
-    required this.showBody,
+    required this.showDescription,
     required this.showDomain,
     required this.showGraphic,
     required this.showTitle,
     this.titleTextStyle,
-    this.bodyTextStyle,
+    this.descriptionTextStyle,
     this.domainTextStyle,
-    this.bodyTextOverflow,
-    this.bodyMaxLines,
+    this.descriptionTextOverflow,
+    this.descriptionMaxLines,
     this.isIcon = false,
     this.bgColor,
     this.radius,
@@ -56,13 +56,13 @@ class LinkViewSmall extends StatelessWidget {
               color: Colors.black,
               fontWeight: FontWeight.bold,
             );
-        var _bodyFontSize = bodyTextStyle ??
+        var _descriptionTS = descriptionTextStyle ??
             TextStyle(
               fontSize: computeTitleFontSize(layoutWidth) - 1,
               color: Colors.grey,
               fontWeight: FontWeight.w400,
             );
-        var _domainTS = bodyTextStyle ??
+        var _domainTS = domainTextStyle ??
             TextStyle(
               fontSize: computeTitleFontSize(layoutHeight) - 1,
               color: Colors.blue,
@@ -104,9 +104,14 @@ class LinkViewSmall extends StatelessWidget {
                         ? _buildTitleContainer(
                             _titleFontSize, computeTitleLines(layoutHeight))
                         : const SizedBox(),
-                    showBody
-                        ? _buildBodyContainer(_bodyFontSize, _domainTS,
-                            computeBodyLines(layoutHeight))
+                    showDomain
+                        ? _buildDomainContainer(_domainTS, 1)
+                        : const SizedBox(),
+                    showDescription
+                        ? _buildDescriptionContainer(
+                            _descriptionTS,
+                            _descriptionTS,
+                            computedescriptionLines(layoutHeight))
                         : const SizedBox(),
                   ],
                 ),
@@ -118,7 +123,7 @@ class LinkViewSmall extends StatelessWidget {
     );
   }
 
-  int computeBodyLines(layoutHeight) {
+  int computedescriptionLines(layoutHeight) {
     var lines = 1;
     if (layoutHeight > 60) {
       lines += (layoutHeight - 60.0) ~/ 30.0 as int;
@@ -139,48 +144,8 @@ class LinkViewSmall extends StatelessWidget {
     return layoutHeight >= 100 ? 2 : 1;
   }
 
-  Widget _buildBodyContainer(
-      TextStyle _bodyTS, TextStyle _domainTS, _maxLines) {
-    return Expanded(
-      flex: 2,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(5, 3, 5, 0),
-        child: Column(
-          children: <Widget>[
-            showDomain
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 6),
-                    child: Align(
-                      alignment: const Alignment(-1.0, -1.0),
-                      child: Text(
-                        domain,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        style: _domainTS,
-                      ),
-                    ),
-                  )
-                : const SizedBox(),
-            Expanded(
-              child: Container(
-                alignment: const Alignment(-1.0, -1.0),
-                child: Text(
-                  description,
-                  textAlign: TextAlign.left,
-                  style: _bodyTS,
-                  overflow: bodyTextOverflow ?? TextOverflow.ellipsis,
-                  maxLines: bodyMaxLines ?? _maxLines,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTitleContainer(TextStyle _titleTS, _maxLines) {
+  Widget _buildDescriptionContainer(
+      TextStyle _descriptionTS, TextStyle _domainTS, _maxLines) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 2, 3, 1),
       child: Column(
@@ -188,13 +153,55 @@ class LinkViewSmall extends StatelessWidget {
           Container(
             alignment: const Alignment(-1.0, -1.0),
             child: Text(
+              description,
+              textAlign: TextAlign.left,
+              style: _descriptionTS,
+              overflow: descriptionTextOverflow ?? TextOverflow.ellipsis,
+              maxLines: descriptionMaxLines ?? _maxLines,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTitleContainer(TextStyle _titleTS, _maxLines) {
+    return Padding(
+      padding:
+          EdgeInsets.fromLTRB(4, 2, 3, showDomain || showDescription ? 0 : 2),
+      child: Container(
+        alignment: const Alignment(-1.0, -1.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
               title,
               style: _titleTS,
               overflow: TextOverflow.ellipsis,
               maxLines: _maxLines,
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDomainContainer(TextStyle _domainTS, _maxLines) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(4, 2, 3, showDescription ? 0 : 2),
+      child: Container(
+        alignment: const Alignment(-1.0, -1.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              domain,
+              style: _domainTS,
+              overflow: TextOverflow.ellipsis,
+              maxLines: _maxLines,
+            ),
+          ],
+        ),
       ),
     );
   }

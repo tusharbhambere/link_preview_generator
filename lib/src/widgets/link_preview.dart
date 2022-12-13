@@ -13,16 +13,13 @@ class LinkPreviewGenerator extends StatefulWidget {
   /// Deaults to `Color.fromRGBO(248, 248, 248, 1.0)`.
   final Color backgroundColor;
 
-  /// Give the limit to body text (Description).
+  /// Give the limit to description text (Description).
   /// If not provided, it will be calculated automatically.
-  final int? bodyMaxLines;
+  final int? descriptionMaxLines;
 
-  /// Customize `body` [TextStyle].
-  final TextStyle? bodyStyle;
-
-  /// Give the overflow type for body text (Description).
+  /// Give the overflow type for description text (Description).
   /// Deaults to `TextOverflow.ellipsis`.
-  final TextOverflow bodyTextOverflow;
+  final TextOverflow descriptionTextOverflow;
 
   /// BorderRadius for the card.
   /// Deafults to `12.0`.
@@ -38,6 +35,12 @@ class LinkPreviewGenerator extends StatefulWidget {
 
   /// Cache result time, default cache `7 days`.
   final Duration cacheDuration;
+
+  /// Customize `description` [TextStyle].
+  final TextStyle? descriptionStyle;
+
+  /// Customize `body` [TextStyle].
+  final TextStyle? domainStyle;
 
   /// Body that need to be shown if parsing fails.
   /// Deaults to `Oops! Unable to parse the url.`
@@ -77,9 +80,9 @@ class LinkPreviewGenerator extends StatefulWidget {
   /// Defaults to `false`.
   final bool removeElevation;
 
-  /// Show or Hide body text (Description).
+  /// Show or Hide description text (Description).
   /// Defaults to `true`.
-  final bool showBody;
+  final bool showDescription;
 
   /// Show or Hide domain name.
   /// Defaults to `true`.
@@ -111,16 +114,17 @@ class LinkPreviewGenerator extends StatefulWidget {
     required this.link,
     this.cacheDuration = const Duration(days: 7),
     this.titleStyle,
-    this.bodyStyle,
+    this.descriptionStyle,
+    this.domainStyle,
     this.linkPreviewStyle = LinkPreviewStyle.large,
-    this.showBody = true,
+    this.showDescription = true,
     this.showDomain = true,
     this.showGraphic = true,
     this.showTitle = true,
     this.graphicFit = BoxFit.cover,
     this.backgroundColor = const Color.fromRGBO(248, 248, 248, 1.0),
-    this.bodyMaxLines,
-    this.bodyTextOverflow = TextOverflow.ellipsis,
+    this.descriptionMaxLines,
+    this.descriptionTextOverflow = TextOverflow.ellipsis,
     this.onTap,
     this.placeholderWidget,
     this.proxyUrl,
@@ -248,10 +252,10 @@ class _LinkPreviewGeneratorState extends State<LinkPreviewGenerator> {
                 description: desc!,
                 imageUri: image!,
                 titleTextStyle: widget.titleStyle,
-                bodyTextStyle: widget.bodyStyle,
-                bodyTextOverflow: widget.bodyTextOverflow,
-                bodyMaxLines: widget.bodyMaxLines,
-                showBody: widget.showBody,
+                domainTextStyle: widget.domainStyle,
+                descriptionTextOverflow: widget.descriptionTextOverflow,
+                descriptionMaxLines: widget.descriptionMaxLines,
+                showDescription: widget.showDescription,
                 showDomain: widget.showDomain,
                 showGraphic: widget.showGraphic,
                 showTitle: widget.showTitle,
@@ -268,10 +272,11 @@ class _LinkPreviewGeneratorState extends State<LinkPreviewGenerator> {
                 description: desc!,
                 imageUri: image!,
                 titleTextStyle: widget.titleStyle,
-                bodyTextStyle: widget.bodyStyle,
-                bodyTextOverflow: widget.bodyTextOverflow,
-                bodyMaxLines: widget.bodyMaxLines,
-                showBody: widget.showBody,
+                descriptionTextStyle: widget.descriptionStyle,
+                domainTextStyle: widget.domainStyle,
+                descriptionTextOverflow: widget.descriptionTextOverflow,
+                descriptionMaxLines: widget.descriptionMaxLines,
+                showDescription: widget.showDescription,
                 showDomain: widget.showDomain,
                 showGraphic: widget.showGraphic,
                 showTitle: widget.showTitle,
