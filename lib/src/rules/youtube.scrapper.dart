@@ -9,6 +9,7 @@ class YouTubeScrapper {
     if (youtubeRegex.hasMatch(url)) {
       return youtubeRegex.firstMatch(url)?.group(7);
     }
+    return null;
   }
 
   static WebInfo scrape(HtmlDocument doc, String url) {

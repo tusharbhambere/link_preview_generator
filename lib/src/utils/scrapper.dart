@@ -106,6 +106,7 @@ class LinkPreviewScrapper {
     var attribute = doc.querySelectorAll(query).firstOrNull?.getAttribute(attr);
 
     if (attribute != null && attribute.isNotEmpty) return attribute;
+    return null;
   }
 
   static String getBaseUrl(HtmlDocument doc, String url) =>
