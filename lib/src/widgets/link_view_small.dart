@@ -50,19 +50,19 @@ class LinkViewSmall extends StatelessWidget {
         var layoutWidth = constraints.biggest.width;
         var layoutHeight = constraints.biggest.height;
 
-        var _titleFontSize = titleTextStyle ??
+        var titleFontSize = titleTextStyle ??
             TextStyle(
               fontSize: computeTitleFontSize(layoutWidth),
               color: Colors.black,
               fontWeight: FontWeight.bold,
             );
-        var _descriptionTS = descriptionTextStyle ??
+        var descriptionTS = descriptionTextStyle ??
             TextStyle(
               fontSize: computeTitleFontSize(layoutWidth) - 1,
               color: Colors.grey,
               fontWeight: FontWeight.w400,
             );
-        var _domainTS = domainTextStyle ??
+        var domainTS = domainTextStyle ??
             TextStyle(
               fontSize: computeTitleFontSize(layoutHeight) - 1,
               color: Colors.blue,
@@ -102,15 +102,15 @@ class LinkViewSmall extends StatelessWidget {
                   children: <Widget>[
                     showTitle
                         ? _buildTitleContainer(
-                            _titleFontSize, computeTitleLines(layoutHeight))
+                            titleFontSize, computeTitleLines(layoutHeight))
                         : const SizedBox(),
                     showDomain
-                        ? _buildDomainContainer(_domainTS, 1)
+                        ? _buildDomainContainer(domainTS, 1)
                         : const SizedBox(),
                     showDescription
                         ? _buildDescriptionContainer(
-                            _descriptionTS,
-                            _descriptionTS,
+                            descriptionTS,
+                            descriptionTS,
                             computedescriptionLines(layoutHeight))
                         : const SizedBox(),
                   ],
@@ -145,7 +145,7 @@ class LinkViewSmall extends StatelessWidget {
   }
 
   Widget _buildDescriptionContainer(
-      TextStyle _descriptionTS, TextStyle _domainTS, _maxLines) {
+      TextStyle descriptionTS, TextStyle domainTS, maxLines) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 2, 3, 1),
       child: Column(
@@ -155,9 +155,9 @@ class LinkViewSmall extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.left,
-              style: _descriptionTS,
+              style: descriptionTS,
               overflow: descriptionTextOverflow ?? TextOverflow.ellipsis,
-              maxLines: descriptionMaxLines ?? _maxLines,
+              maxLines: descriptionMaxLines ?? maxLines,
             ),
           ),
         ],
@@ -165,7 +165,7 @@ class LinkViewSmall extends StatelessWidget {
     );
   }
 
-  Widget _buildTitleContainer(TextStyle _titleTS, _maxLines) {
+  Widget _buildTitleContainer(TextStyle titleTS, maxLines) {
     return Padding(
       padding:
           EdgeInsets.fromLTRB(4, 2, 3, showDomain || showDescription ? 0 : 2),
@@ -176,9 +176,9 @@ class LinkViewSmall extends StatelessWidget {
           children: <Widget>[
             Text(
               title,
-              style: _titleTS,
+              style: titleTS,
               overflow: TextOverflow.ellipsis,
-              maxLines: _maxLines,
+              maxLines: maxLines,
             ),
           ],
         ),
@@ -186,7 +186,7 @@ class LinkViewSmall extends StatelessWidget {
     );
   }
 
-  Widget _buildDomainContainer(TextStyle _domainTS, _maxLines) {
+  Widget _buildDomainContainer(TextStyle domainTS, maxLines) {
     return Padding(
       padding: EdgeInsets.fromLTRB(4, 2, 3, showDescription ? 0 : 2),
       child: Container(
@@ -196,9 +196,9 @@ class LinkViewSmall extends StatelessWidget {
           children: <Widget>[
             Text(
               domain,
-              style: _domainTS,
+              style: domainTS,
               overflow: TextOverflow.ellipsis,
-              maxLines: _maxLines,
+              maxLines: maxLines,
             ),
           ],
         ),

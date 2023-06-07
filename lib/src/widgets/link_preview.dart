@@ -150,7 +150,7 @@ class _LinkPreviewGeneratorState extends State<LinkPreviewGenerator> {
   @override
   Widget build(BuildContext context) {
     final info = _info;
-    var _height = (widget.linkPreviewStyle == LinkPreviewStyle.small ||
+    var height = (widget.linkPreviewStyle == LinkPreviewStyle.small ||
             !widget.showGraphic)
         ? MediaQuery.of(context).size.height * 0.15
         : MediaQuery.of(context).size.height * 0.30;
@@ -158,7 +158,7 @@ class _LinkPreviewGeneratorState extends State<LinkPreviewGenerator> {
     if (_loading) {
       return widget.placeholderWidget ??
           Container(
-            height: _height,
+            height: height,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(widget.borderRadius),
@@ -173,7 +173,7 @@ class _LinkPreviewGeneratorState extends State<LinkPreviewGenerator> {
       if (_info!.type == LinkPreviewType.image) {
         var img = _info!.image;
         return _buildLinkContainer(
-          _height,
+          height,
           title: widget.errorTitle,
           desc: widget.errorBody,
           image: (widget.proxyUrl ?? '') +
@@ -184,9 +184,9 @@ class _LinkPreviewGeneratorState extends State<LinkPreviewGenerator> {
 
     return _info == null
         ? widget.errorWidget ??
-            _buildPlaceHolder(widget.backgroundColor, _height)
+            _buildPlaceHolder(widget.backgroundColor, height)
         : _buildLinkContainer(
-            _height,
+            height,
             domain:
                 LinkPreviewAnalyzer.isNotEmpty(info!.domain) ? info.domain : '',
             title: LinkPreviewAnalyzer.isNotEmpty(info.title)
@@ -217,7 +217,7 @@ class _LinkPreviewGeneratorState extends State<LinkPreviewGenerator> {
   }
 
   Widget _buildLinkContainer(
-    double _height, {
+    double height, {
     String? domain = '',
     String? title = '',
     String? desc = '',
@@ -240,7 +240,7 @@ class _LinkPreviewGeneratorState extends State<LinkPreviewGenerator> {
                   )
                 ],
       ),
-      height: _height,
+      height: height,
       child: InkWell(
         onTap: widget.onTap ?? () => _launchURL(widget.link),
         child: (widget.linkPreviewStyle == LinkPreviewStyle.small)
@@ -322,11 +322,11 @@ class _LinkPreviewGeneratorState extends State<LinkPreviewGenerator> {
   }
 
   void _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       try {
-        await launch(url);
+        await launchUrl(Uri.parse(url));
       } catch (err) {
         throw Exception('Could not launch $url. Error: $err');
       }

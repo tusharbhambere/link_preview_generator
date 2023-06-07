@@ -136,10 +136,10 @@ class LinkPreviewScrapper {
   }
 
   static String? getIcon(HtmlDocument doc, String url) {
-    final List<Element>? meta = doc.querySelectorAll('link');
+    final List<Element> meta = doc.querySelectorAll('link');
     String? icon = '';
     Element? metaIcon;
-    if (meta != null && meta.isNotEmpty) {
+    if (meta.isNotEmpty) {
       // get icon first
       metaIcon = meta.firstWhereOrNull((e) {
         final rel = (e.attributes['rel'] ?? '').toLowerCase();

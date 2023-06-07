@@ -50,19 +50,19 @@ class LinkViewLarge extends StatelessWidget {
         var layoutWidth = constraints.biggest.width;
         var layoutHeight = constraints.biggest.height;
 
-        var _titleTS = titleTextStyle ??
+        var titleTS = titleTextStyle ??
             TextStyle(
               fontSize: computeTitleFontSize(layoutHeight),
               color: Colors.black,
               fontWeight: FontWeight.bold,
             );
-        var _descriptionTS = descriptionTextStyle ??
+        var descriptionTS = descriptionTextStyle ??
             TextStyle(
               fontSize: computeTitleFontSize(layoutHeight) - 1,
               color: Colors.grey,
               fontWeight: FontWeight.w400,
             );
-        var _domainTS = domainTextStyle ??
+        var domainTS = domainTextStyle ??
             TextStyle(
               fontSize: computeTitleFontSize(layoutHeight) - 1,
               color: Colors.blue,
@@ -95,14 +95,14 @@ class LinkViewLarge extends StatelessWidget {
                 : const SizedBox(height: 5),
             showTitle
                 ? _buildTitleContainer(
-                    _titleTS, computeTitleLines(layoutHeight, layoutWidth))
+                    titleTS, computeTitleLines(layoutHeight, layoutWidth))
                 : const SizedBox(),
             showDomain
                 ? _buildDomainContainer(
-                    _domainTS, computeTitleLines(layoutHeight, layoutWidth))
+                    domainTS, computeTitleLines(layoutHeight, layoutWidth))
                 : const SizedBox(),
             showDescription
-                ? _buildDescriptionContainer(_descriptionTS, _domainTS,
+                ? _buildDescriptionContainer(descriptionTS, domainTS,
                     computeDescriptionLines(layoutHeight))
                 : const SizedBox(),
           ],
@@ -130,7 +130,7 @@ class LinkViewLarge extends StatelessWidget {
   }
 
   Widget _buildDescriptionContainer(
-      TextStyle _descriptionTS, TextStyle _domainTS, _maxLines) {
+      TextStyle descriptionTS, TextStyle domainTS, maxLines) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 5, 5, 5),
       child: Container(
@@ -140,9 +140,9 @@ class LinkViewLarge extends StatelessWidget {
           children: <Widget>[
             Text(
               description,
-              style: _descriptionTS,
+              style: descriptionTS,
               overflow: descriptionTextOverflow ?? TextOverflow.ellipsis,
-              maxLines: descriptionMaxLines ?? _maxLines,
+              maxLines: descriptionMaxLines ?? maxLines,
             ),
           ],
         ),
@@ -150,7 +150,7 @@ class LinkViewLarge extends StatelessWidget {
     );
   }
 
-  Widget _buildTitleContainer(TextStyle _titleTS, _maxLines) {
+  Widget _buildTitleContainer(TextStyle titleTS, maxLines) {
     return Padding(
       padding:
           EdgeInsets.fromLTRB(10, 5, 5, showDomain || showDescription ? 0 : 5),
@@ -161,9 +161,9 @@ class LinkViewLarge extends StatelessWidget {
           children: <Widget>[
             Text(
               title,
-              style: _titleTS,
+              style: titleTS,
               overflow: TextOverflow.ellipsis,
-              maxLines: _maxLines,
+              maxLines: maxLines,
             ),
           ],
         ),
@@ -171,7 +171,7 @@ class LinkViewLarge extends StatelessWidget {
     );
   }
 
-  Widget _buildDomainContainer(TextStyle _domainTS, _maxLines) {
+  Widget _buildDomainContainer(TextStyle domainTS, maxLines) {
     return Padding(
       padding: EdgeInsets.fromLTRB(10, 5, 5, showDescription ? 0 : 5),
       child: Container(
@@ -181,9 +181,9 @@ class LinkViewLarge extends StatelessWidget {
           children: <Widget>[
             Text(
               domain,
-              style: _domainTS,
+              style: domainTS,
               overflow: TextOverflow.ellipsis,
-              maxLines: _maxLines,
+              maxLines: maxLines,
             ),
           ],
         ),
